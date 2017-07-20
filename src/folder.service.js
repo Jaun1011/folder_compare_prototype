@@ -9,7 +9,7 @@ function _getFileList(dir, filelist) {
         files = fs.readdirSync(dir);
 
     filelist = filelist || [];
-    _.forEach(files,function (file) {
+    _.forEach(files, function (file) {
         if (fs.statSync(dir + '/' + file).isDirectory()) {
             filelist = walkSync(dir + '/' + file, filelist);
         }
@@ -33,15 +33,35 @@ function initFiles(dir) {
     DataStore.insert(list);
 }
 
-
 function compare(dir) {
-    DataStore.find()
+// compare existing folders
+
+    var actualFiles = _getFileList(dir);
+
+    DataStore.getDB().find({}, function (err, files) {
+        if(_compareArrayProperty(files,actualFiles,'dir')){
+            console.log(files);
+            _readFileContentSha256()
+            _compareArrayProperty(files, actualFiles, 'hash')
+        }else{
+            // check which file is new
+        }
+    });
+}
+
+function _compareArrayProperty(initial, actual, prop) {
+    function _getProperty(value) {
+        return _.map(value, prop).sort()
+    }
+
+    return _.isEqual(
+        _getProperty(initial),
+        _getProperty(actual));
 }
 
 module.exports = {
     initFiles: initFiles,
     compare: compare
-
 };
 
 

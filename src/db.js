@@ -1,7 +1,3 @@
-/**
- * Created by jan on 10.07.2017.
- */
-
 var Datastore = require('nedb');
 var db = new Datastore({
     filename: './res/initial.json',
@@ -17,15 +13,12 @@ var DataStore = {
 
     update : function (old, update) {
         db.update(old, update, {}, function (err) {
-
             console.log(err, newDocs)
         });
     },
 
-    find : function () {
-        db.find( function (err) {
-            console.log(err, newDocs)
-        });
+    getDB : function () {
+        return db;
     }
 
 
