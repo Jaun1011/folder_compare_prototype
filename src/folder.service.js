@@ -20,6 +20,12 @@ function _getFileList(dir, filelist) {
     return filelist;
 }
 
+function _enrichFileObject(list) {
+    return _.forEach(list, function (file) {
+        file.hash = _readFileContentSha256(file.dir);
+    });
+}
+
 function _readFileContentSha256(dir) {
     var content = fs.readFileSync(dir).toString();
     return sha256(content);
@@ -27,36 +33,17 @@ function _readFileContentSha256(dir) {
 
 function initFiles(dir) {
     var list = _getFileList(dir);
-    _.forEach(list, function (file) {
-        file.hash = _readFileContentSha256(file.dir);
-    });
+    list = _enrichFileObject(list);
     DataStore.insert(list);
 }
 
 function compare(dir) {
-// compare existing folders
-
     var actualFiles = _getFileList(dir);
-
     DataStore.getDB().find({}, function (err, files) {
-        if(_compareArrayProperty(files,actualFiles,'dir')){
-            console.log(files);
-            _readFileContentSha256()
-            _compareArrayProperty(files, actualFiles, 'hash')
-        }else{
-            // check which file is new
-        }
+        actualFiles = _enrichFileObject(actualFiles);
+        _.differenceBy(actualFiles, files, 'dir');
+        console.log(_.differenceBy(actualFiles, files, 'hash'));
     });
-}
-
-function _compareArrayProperty(initial, actual, prop) {
-    function _getProperty(value) {
-        return _.map(value, prop).sort()
-    }
-
-    return _.isEqual(
-        _getProperty(initial),
-        _getProperty(actual));
 }
 
 module.exports = {
