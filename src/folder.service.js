@@ -10,11 +10,11 @@ function _getFileList(dir, filelist) {
 
     filelist = filelist || [];
     _.forEach(files, function (file) {
-        if (fs.statSync(dir + '/' + file).isDirectory()) {
-            filelist = walkSync(dir + '/' + file, filelist);
-        }
-        else {
-            filelist.push({dir: dir + '/' + file});
+        var path = dir + '/' + file;
+        if (fs.statSync(path).isDirectory()) {
+            filelist = walkSync(path, filelist);
+        }else {
+            filelist.push({dir: path});
         }
     });
     return filelist;
@@ -39,10 +39,16 @@ function initFiles(dir) {
 
 function compare(dir) {
     var actualFiles = _getFileList(dir);
-    DataStore.getDB().find({}, function (err, files) {
+
+    return DataStore.getDB().find({}, function (err, files) {
         actualFiles = _enrichFileObject(actualFiles);
-        _.differenceBy(actualFiles, files, 'dir');
-        console.log(_.differenceBy(actualFiles, files, 'hash'));
+        var result =  {
+            newDir : _.differenceBy(actualFiles, files, 'dir'),
+            existingDir: _.differenceBy(actualFiles, files, 'hash')
+        };
+        if(!_.isEqual(result.newDir, []) || !_.isEqual(result.existingDir, [])){
+            console.log("sendmail");
+        }
     });
 }
 
