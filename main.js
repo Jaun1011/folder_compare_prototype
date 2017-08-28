@@ -8,8 +8,6 @@ for (var i = 0; i < args.length; i++){
     options(args[i],args[i+1])
 }
 
-
-
 function options(param, value) {
     switch(param){
         case '-i':
@@ -17,11 +15,14 @@ function options(param, value) {
             FolderService.initFiles(value);
             break;
         case '-c':
+            interval(value, 1000 * 60 * 5);
             FolderService.compare(value);
             break;
     }
 }
 
-function interval(value) {
-    setInterval(function () { console.log("whooo") }, 1000);
+function interval(value, time) {
+    setInterval(function () {
+        FolderService.compare(value)
+    }, time);
 }
