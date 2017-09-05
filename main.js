@@ -1,10 +1,8 @@
 var FolderService = require('./src/folder.service');
 
-
 var _ = require('lodash');
 var CONFIG = require('./res/config.js');
 var args = process.argv.slice(2);
-
 
 options(args[0]);
 

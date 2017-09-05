@@ -31,5 +31,3 @@ function send(context) {
 module.exports = {
     send: send
 };
-
-

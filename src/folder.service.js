@@ -86,5 +86,3 @@ module.exports = {
     initFiles: initFiles,
     compare: compare
 };
-
-
