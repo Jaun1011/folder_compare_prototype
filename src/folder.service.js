@@ -1,14 +1,12 @@
 const fs = require('fs');
 const _ = require('lodash');
-
-var walkSync = require('walk-sync');
+var path = require('path');
 const sha256 = require('sha256');
+
+
 var DataStore = require('./db');
 var MailService = require('./mail.service');
-
-var path = require('path');
-
-
+var ReportGenerator = require('./report.generator');
 
 // Windows?
 var win32 = 'win32';
@@ -43,12 +41,8 @@ function _prepareFolders(dir) {
 }
 
 function _enrichFileObject(list) {
-    //var datetime = require('node-datetime');
-
     return _.forEach(list, function (file) {
         file.hash = _readFileContentSha256(file.dir);
-      //  file.date = datetime.now();
-
     });
 }
 
@@ -78,7 +72,12 @@ function compare(dir) {
         if(!_.isEqual(result.newDir, []) || !_.isEqual(result.existingDir, [])){
             console.log('mail is sent');
             console.log(result);
-            MailService.send(result);
+
+            var report =
+                ReportGenerator.toHtml(result.newDir , 'New Directories') +
+                ReportGenerator.toHtml(result.existingDir, 'Changed Directories');
+
+            MailService.send(report);
         }
     });
 }

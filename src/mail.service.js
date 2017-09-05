@@ -15,7 +15,7 @@ function send(context) {
         to: ['jan.kuonen.93@gmail.com'],
         subject: 'INFO Folderreport',
         text: 'Suspectious Folder',
-        html: JSON.stringify(context)
+        html: context
     };
 
     client.sendMail(email, function (err, info) {
