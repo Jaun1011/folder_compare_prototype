@@ -19,8 +19,12 @@ var DataStore = {
 
     getDB : function () {
         return db;
-    }
+    },
 
-
+   removeDB: function () {
+       db.remove({}, { multi: true }, function (err, numRemoved) {
+           console.log(err, numRemoved)
+       });
+   }
 };
 module.exports = DataStore;

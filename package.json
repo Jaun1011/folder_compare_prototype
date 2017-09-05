@@ -14,6 +14,11 @@
     "fs": "0.0.1-security",
     "lodash": "^4.17.4",
     "nedb": "^1.8.0",
-    "sha256": "^0.2.0"
+    "node-datetime": "^2.0.3",
+    "nodemailer": "^4.1.0",
+    "nodemailer-sendgrid-transport": "^0.2.0",
+    "nodemailer-smtp-transport": "^2.7.4",
+    "sha256": "^0.2.0",
+    "walk-sync": "^0.3.2"
   }
 }

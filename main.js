@@ -1,28 +1,38 @@
 var FolderService = require('./src/folder.service');
 
-//FolderService.initFiles('./res');
 
-
+var _ = require('lodash');
+var CONFIG = require('./res/config.js');
 var args = process.argv.slice(2);
-for (var i = 0; i < args.length; i++){
-    options(args[i],args[i+1])
-}
 
-function options(param, value) {
+
+options(args[0]);
+
+function options(param) {
     switch(param){
-        case '-i':
-            console.log(value);
-            FolderService.initFiles(value);
+        case '-i' || '--init':
+            _.forEach(CONFIG.FOLDERS,function (folder) {
+                FolderService.initFiles(folder);
+            });
             break;
-        case '-c':
-            interval(value, 1000 * 60 * 5);
-            FolderService.compare(value);
+        case '-c' || '--compare':
+            compare(CONFIG.FOLDERS);
+            break;
+
+        case '-t' || '--time':
+            interval(CONFIG.FOLDERS, CONFIG.TIME_INTERVAL);
             break;
     }
 }
 
-function interval(value, time) {
+function compare(folders) {
+    _.forEach(folders,function(folder){
+        FolderService.compare(folder)
+    });
+}
+
+function interval(folders, time) {
     setInterval(function () {
-        FolderService.compare(value)
+       compare(folders)
     }, time);
 }
