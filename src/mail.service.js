@@ -1,30 +1,35 @@
 var nodemailer = require('nodemailer');
-var smtpTransport = require('nodemailer-smtp-transport');
+var sgTransport = require('nodemailer-sendgrid-transport');
+var CONFIG = require('../res/config');
 
-var transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    //port: 587,
-    secure: true, // true for 465, false for other ports
+var client = nodemailer.createTransport(sgTransport({
     auth: {
-        user: '', // generated ethereal user
-        pass: '' // generated ethereal password
+        //api_user: CONFIG.SENDGRID.API_USER,
+        api_key: CONFIG.SENDGRID.API_KEY
     }
-});
-// izq6jr4ZQWSJEbM88f-G_w
+}));
+
+function send(context) {
+    var email = {
+        from: 'info@folderscanner.int',
+        to: ['jan.kuonen.93@gmail.com'],
+        subject: 'INFO Folderreport',
+        text: 'Suspectious Folder',
+        html: JSON.stringify(context)
+    };
+
+    client.sendMail(email, function (err, info) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            console.log('Message sent: ' + info.response);
+        }
+    });
+}
+
+module.exports = {
+    send: send
+};
 
 
-transporter.sendMail(
-    // e-mail options
-    {
-        sender: '',
-        to:'',
-        subject:'Hello!',
-        html: '<p><b>Hi,</b> how are you doing?</p>',
-        body:'Hi, how are you doing?'
-    },
-    // callback function
-    function(error, success){
-        console.log('Message ' + success);
-        console.log('Message ' + error);
-    }
-);

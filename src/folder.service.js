@@ -4,6 +4,7 @@ const _ = require('lodash');
 var walkSync = require('walk-sync');
 const sha256 = require('sha256');
 var DataStore = require('./db');
+var MailService = require('./mail.service');
 
 var path = require('path');
 
@@ -74,11 +75,10 @@ function compare(dir) {
             newDir : _.differenceBy(actualFiles, files, 'dir'),
             existingDir: _.differenceBy(actualFiles, files, 'hash')
         };
-
-
-        console.log(result);
         if(!_.isEqual(result.newDir, []) || !_.isEqual(result.existingDir, [])){
-            console.log("sendmail");
+            console.log('mail is sent');
+            console.log(result);
+            MailService.send(result);
         }
     });
 }

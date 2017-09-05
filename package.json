@@ -18,6 +18,7 @@
     "nodemailer": "^4.1.0",
     "nodemailer-sendgrid-transport": "^0.2.0",
     "nodemailer-smtp-transport": "^2.7.4",
+    "sendgrid": "^5.2.3",
     "sha256": "^0.2.0",
     "walk-sync": "^0.3.2"
   }
