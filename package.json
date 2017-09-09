@@ -10,7 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^1.0.2",
-    "electron": "^1.6.11",
     "fs": "0.0.1-security",
     "lodash": "^4.17.4",
     "nedb": "^1.8.0",
@@ -21,5 +20,10 @@
     "sendgrid": "^5.2.3",
     "sha256": "^0.2.0",
     "walk-sync": "^0.3.2"
+  },
+  "devDependencies": {
+    "jasmine": "^2.8.0",
+    "pkg": "^4.2.4",
+    "yarn": "^1.0.0"
   }
 }
