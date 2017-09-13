@@ -25,12 +25,12 @@ function options(param) {
 
 function compare(folders) {
     _.forEach(folders,function(folder){
-        FolderService.compare(folder)
+        FolderService.compare(folder);
     });
 }
 
 function interval(folders, time) {
     setInterval(function () {
-       compare(folders)
+       compare(folders);
     }, time);
 }

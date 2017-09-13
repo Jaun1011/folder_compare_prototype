@@ -1,43 +1,23 @@
 const fs = require('fs');
 const _ = require('lodash');
-var path = require('path');
+
 const sha256 = require('sha256');
-
-
 var DataStore = require('./db');
-var MailService = require('./mail.service');
-var ReportGenerator = require('./report.generator');
 
-// Windows?
-var win32 = 'win32';
-// Normalize \\ paths to / paths.
-function unixifyPath(filepath) {
-    if (win32) {
-        return filepath.replace(/\\/g, '/');
-    } else {
-        return filepath;
-    }
-}
+function _getFileList(dir, filelist) {
+    var fs = fs || require('fs'),
+        files = fs.readdirSync(dir);
 
-// Recurse into a directory, executing callback for each file.
-function walk(rootdir, callback, subdir) {
-    var abspath = subdir ? path.join(rootdir, subdir) : rootdir;
-    fs.readdirSync(abspath).forEach(function(filename) {
-        var filepath = path.join(abspath, filename);
-        if (fs.statSync(filepath).isDirectory()) {
-            walk(rootdir, callback, unixifyPath(path.join(subdir || '', filename || '')));
-        } else {
-            callback(unixifyPath(filepath), rootdir, subdir, filename);
+    filelist = filelist || [];
+    _.forEach(files, function (file) {
+        var path = dir + '/' + file;
+        if (fs.statSync(path).isDirectory()) {
+            filelist = walkSync(path, filelist);
+        }else {
+            filelist.push({dir: path});
         }
     });
-}
-
-function _prepareFolders(dir) {
-    var list = [];
-    walk(dir, function(filepath, rootdir, subdir, filename) {
-        list.push({dir: filepath})
-    });
-    return list
+    return filelist;
 }
 
 function _enrichFileObject(list) {
@@ -52,16 +32,13 @@ function _readFileContentSha256(dir) {
 }
 
 function initFiles(dir) {
-    DataStore.removeDB();
-    var list = _prepareFolders(dir);
-
-    console.log(list);
-    var result = _enrichFileObject(list);
-    DataStore.insert(result);
+    var list = _getFileList(dir);
+    list = _enrichFileObject(list);
+    DataStore.insert(list);
 }
 
 function compare(dir) {
-    var actualFiles = _prepareFolders(dir);
+    var actualFiles = _getFileList(dir);
 
     return DataStore.getDB().find({}, function (err, files) {
         actualFiles = _enrichFileObject(actualFiles);
@@ -70,14 +47,7 @@ function compare(dir) {
             existingDir: _.differenceBy(actualFiles, files, 'hash')
         };
         if(!_.isEqual(result.newDir, []) || !_.isEqual(result.existingDir, [])){
-            console.log('mail is sent');
-            console.log(result);
-
-            var report =
-                ReportGenerator.toHtml(result.newDir , 'New Directories') +
-                ReportGenerator.toHtml(result.existingDir, 'Changed Directories');
-
-            MailService.send(report);
+            console.log("sendmail");
         }
     });
 }
