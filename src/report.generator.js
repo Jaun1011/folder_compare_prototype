@@ -1,16 +1,11 @@
 
 function toHtml(values , title) {
-    var html = '<table>';
-    html += '<tr>';
-    html += '<th>Folder</th><th>' + title+ '</th>';
-    html += '</tr>';
+    var html = '<table><tr><th>Folder</th><th>' + title+ '</th></tr>';
     for (var i = 0; i < values.length; i++) {
-        html += '<tr>';
-        html += '<td>' + values[i].dir + '</td><td>' + values[i].hash + '</td>';
-        html += '</tr>';
+        html += '<tr><td>' + values[i].dir + '</td><td>' + values[i].hash + '</td></tr>';
     }
     html += '<table/>';
-    return html
+    return html;
 }
 
 module.exports = {

@@ -4,6 +4,7 @@
   "description": "generates checksum and saves it",
   "main": "index.js",
   "scripts": {
+    "buid": "pkg main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
