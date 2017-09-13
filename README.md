@@ -12,6 +12,4 @@ This tool scans throught your folder and compares it with an initialized state.
 
 
 # TODO
-- 
 - folder injecting
-- 
