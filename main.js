@@ -1,24 +1,25 @@
-var FolderService = require('./src/folder.service');
+const fs = require('fs');
+const _ = require('lodash');
 
-var _ = require('lodash');
-var CONFIG = require('./res/config.js');
-var args = process.argv.slice(2);
+let env = require('node-env-file');
+let args = process.argv.slice(2);
+let FOLDER_CONFIG = loadConfigFile('./conf/folder_config.json');
+let FolderService = require('./src/folders/folder.service');
 
-options(args[0]);
-
-function options(param) {
+main(args[0]);
+function main(param) {
     switch(param){
         case '-i' || '--init':
-            _.forEach(CONFIG.FOLDERS,function (folder) {
+            _.forEach(FOLDER_CONFIG.folders, function (folder) {
                 FolderService.initFiles(folder);
             });
             break;
         case '-c' || '--compare':
-            compare(CONFIG.FOLDERS);
+            compare(FOLDER_CONFIG.folders);
             break;
 
         case '-t' || '--time':
-            interval(CONFIG.FOLDERS, CONFIG.TIME_INTERVAL);
+            interval(FOLDER_CONFIG.folders, FOLDER_CONFIG.timeInterval);
             break;
     }
 }
@@ -33,4 +34,15 @@ function interval(folders, time) {
     setInterval(function () {
        compare(folders);
     }, time);
+}
+
+
+/**
+ * JSON files cant be loaded over the require way.
+ * You have to load it over fs..
+ * @param path
+ */
+function loadConfigFile(path) {
+    var config = fs.readFileSync(path).toString();
+    return JSON.parse(config);
 }

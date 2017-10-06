@@ -7,13 +7,15 @@ var db = new Datastore({
 var DataStore = {
     insert: function (obj) {
         db.insert(obj, function (err, newDocs) {
-            console.log(err, newDocs)
+            console.log(newDocs);
+            if (err)
+                console.log(err);
         });
     },
 
     update : function (old, update) {
         db.update(old, update, {}, function (err) {
-            console.log(err, newDocs)
+            console.log(err, newDocs);
         });
     },
 
@@ -23,8 +25,10 @@ var DataStore = {
 
    removeDB: function () {
        db.remove({}, { multi: true }, function (err, numRemoved) {
-           console.log(err, numRemoved)
+           console.log(err, numRemoved);
        });
    }
+
+
 };
 module.exports = DataStore;

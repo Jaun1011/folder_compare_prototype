@@ -1,0 +1,13 @@
+{
+  "timeInterval": 60000,
+
+  "injectFiles": [
+    "./res/files/inject_1.txt",
+    "./res/files/inject_1.txt",
+    "./res/files/inject_1.txt"
+  ],
+
+  "folders": [
+    "./.idea"
+  ]
+}
