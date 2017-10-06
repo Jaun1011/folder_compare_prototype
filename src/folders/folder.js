@@ -2,6 +2,7 @@ let _ = require('lodash');
 
 const fs = require('fs');
 const walkSync = require('walk-sync');
+const Filehound = require('filehound');
 
 const sha256 = require('sha256');
 
@@ -17,18 +18,23 @@ function readAllFilesWithSubFolders(dir, filelist) {
 
     filelist = filelist || [];
     _.forEach(files, function (file) {
-
-
         let path = dir + '/' + file;
         if (fs.statSync(path).isDirectory()) {
             filelist = walkSync(path, filelist);
-
         } else {
             filelist.push({dir: path});
         }
     });
     return filelist;
 }
+
+function getAllFolders(path) {
+    return Filehound.create()
+        .path(path)
+        .directory()
+        .findSync();
+}
+
 
 function readFileContentInSha256(dir) {
     let content = fs
@@ -39,5 +45,6 @@ function readFileContentInSha256(dir) {
 
 module.exports = {
     readAllFilesWithSubFolders: readAllFilesWithSubFolders,
-    readFileContentInSha256: readFileContentInSha256
+    readFileContentInSha256: readFileContentInSha256,
+    getAllFolders: getAllFolders
 };

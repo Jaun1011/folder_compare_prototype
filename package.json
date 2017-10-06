@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^1.0.2",
+    "filehound": "^1.16.2",
     "fs": "0.0.1-security",
     "lodash": "^4.17.4",
     "nedb": "^1.8.0",

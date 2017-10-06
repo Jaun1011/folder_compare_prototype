@@ -11,3 +11,10 @@ test('are subfolders correct', () => {
     expect(res[0].dir).toBe("./res_test/foldering/testfile_1");
     expect(res[1].dir).toBe("./res_test/foldering/testfile_2");
 });
+
+
+test('are subfolders correct', () => {
+    let res = Folder.getAllFolders("./res_test/foldering");
+
+    console.log(res)
+});
