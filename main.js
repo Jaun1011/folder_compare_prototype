@@ -3,7 +3,11 @@ const _ = require('lodash');
 
 let env = require('node-env-file');
 let args = process.argv.slice(2);
-let FOLDER_CONFIG = loadConfigFile('./conf/folder_config.json');
+
+
+let FOLDER_CONFIG = loadConfigFile('./res/conf/folder_config.json');
+
+
 let FolderService = require('./src/folders/folder.service');
 
 main(args[0]);

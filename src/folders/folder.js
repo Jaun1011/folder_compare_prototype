@@ -1,19 +1,20 @@
 const _ = require('lodash');
 
-const walkSync = require('walk-sync');
 const fs = require('fs');
+const walkSync = require('walk-sync');
+
 const sha256 = require('sha256');
 
-
 function readAllFilesWithSubFolders(dir, filelist) {
-    var fs = fs || require('fs'),
-        files = fs.readdirSync(dir);
+
+    let files = fs.readdirSync(dir);
 
     filelist = filelist || [];
     _.forEach(files, function (file) {
-        var path = dir + '/' + file;
+        let path = dir + '/' + file;
         if (fs.statSync(path).isDirectory()) {
             filelist = walkSync(path, filelist);
+
         } else {
             filelist.push({dir: path});
         }
@@ -22,7 +23,9 @@ function readAllFilesWithSubFolders(dir, filelist) {
 }
 
 function readFileContentInSha256(dir) {
-    var content = fs.readFileSync(dir).toString();
+    let content = fs
+        .readFileSync(dir)
+        .toString();
     return sha256(content);
 }
 

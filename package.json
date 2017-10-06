@@ -4,8 +4,9 @@
   "description": "generates checksum and saves it",
   "main": "index.js",
   "scripts": {
+    "run": "node main.js -i",
     "buid": "pkg main.js ",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
