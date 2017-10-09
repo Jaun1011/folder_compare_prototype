@@ -1,20 +1,36 @@
 const Folder = require('./folder');
 
 test('is hashvalue correct', () => {
-    expect(Folder.readFileContentInSha256("./res_test/foldering/testfile_1"))
-        .toBe("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855")
+    let hash = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855";
+
+    expect(Folder.readFileContentInSha256("./res_test/foldering/testfile_1")).toBe(hash)
 });
+
+test('readAllFilesWithSubFolders are files correctly listed', () => {
+    let files = Folder.readAllFilesWithSubFolders("./res_test/foldering");
+    let result = [
+        'res_test\\foldering\\sub_1\\sub_11\\testfile_111',
+        'res_test\\foldering\\sub_1\\testfile_11',
+        'res_test\\foldering\\sub_2\\u_sub_11\\blub',
+        'res_test\\foldering\\testfile_1',
+        'res_test\\foldering\\testfile_2'
+    ];
+
+    isEqual(files, result);
+});
+
 
 test('are subfolders correct', () => {
-    let res = Folder.readAllFilesWithSubFolders("./res_test/foldering");
-
-    expect(res[0].dir).toBe("./res_test/foldering/testfile_1");
-    expect(res[1].dir).toBe("./res_test/foldering/testfile_2");
+    let folders = Folder.getAllFolders("./res_test/foldering");
+    let result = [
+        'res_test\\foldering\\sub_1',
+        'res_test\\foldering\\sub_1\\sub_11',
+        'res_test\\foldering\\sub_2',
+        'res_test\\foldering\\sub_2\\u_sub_11'
+    ];
+    isEqual(folders, result);
 });
 
-
-test('are subfolders correct', () => {
-    let res = Folder.getAllFolders("./res_test/foldering");
-
-    console.log(res)
-});
+function isEqual(obj1, obj2) {
+    expect(JSON.stringify(obj1)).toBe(JSON.stringify(obj2));
+}
