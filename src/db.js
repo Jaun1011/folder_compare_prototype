@@ -1,6 +1,6 @@
 var Datastore = require('nedb');
 var db = new Datastore({
-    filename: './res/initial.json',
+    filename: './res/db/initial.json',
     autoload: true
 });
 
