@@ -11,14 +11,31 @@ function _enrichFileObject(list) {
     });
 }
 
+function injectHoneyPod(files, dir, cadence) {
+    let folders = Folder.getAllFolders(dir);
+    console.log(folders);
+
+    folders = _.sortBy(folders, [(folder) => {
+        return folder.length;
+    }]).filter((folder,index) => {
+        return index % cadence == 0;
+    });
+    console.log(folders);
+
+
+}
+
+
+
+
 /**
  * init folders without filename
  * @param dir
  */
 function initFiles(dir) {
-    let list = Folder.readAllFilesWithSubFolders(dir);
-    list = _enrichFileObject(list);
-    DataStore.insert(list);
+    let files = Folder.readAllFilesWithSubFolders(dir);
+    files = _enrichFileObject(files);
+    DataStore.insert(files);
 }
 
 /**
@@ -38,10 +55,10 @@ function compare(dir) {
             console.log("sendmail");
         }
     });
-
 }
 
 module.exports = {
     initFiles: initFiles,
-    compare: compare
+    compare: compare,
+    injectHoneyPod:injectHoneyPod
 };

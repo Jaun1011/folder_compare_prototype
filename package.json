@@ -14,6 +14,7 @@
     "bcrypt": "^1.0.2",
     "filehound": "^1.16.2",
     "fs": "0.0.1-security",
+    "fs-extra": "^4.0.2",
     "lodash": "^4.17.4",
     "nedb": "^1.8.0",
     "node-datetime": "^2.0.3",

@@ -1,6 +1,7 @@
 let _ = require('lodash');
 
 const fs = require('fs');
+const fse = require('fs-extra');
 const walkSync = require('walk-sync');
 const Filehound = require('filehound');
 const sha256 = require('sha256');
@@ -12,7 +13,7 @@ const sha256 = require('sha256');
  * @param filelist
  * @returns {*|Array}
  */
-function readAllFilesWithSubFolders(dir, filelist) {
+function readAllFilesWithSubFolders(dir) {
     return Filehound.create()
         .path(dir)
         .findSync();
@@ -30,6 +31,10 @@ function readFileContentInSha256(dir) {
         .readFileSync(dir)
         .toString();
     return sha256(content);
+}
+
+function copy(file ,target) {
+    fse.copySync(path.resolve(__dirname,'./init/xxx.json'), 'xxx.json');
 }
 
 module.exports = {
