@@ -1,10 +1,12 @@
-var Datastore = require('nedb');
-var db = new Datastore({
+'use strict';
+
+let Datastore = require('nedb');
+let db = new Datastore({
     filename: './res/db/initial.json',
     autoload: true
 });
 
-var DataStore = {
+let DataStore = {
     insert: function (obj) {
         db.insert(obj, function (err, newDocs) {
             console.log(newDocs);

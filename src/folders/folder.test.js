@@ -1,3 +1,5 @@
+'use strict';
+
 const Folder = require('./folder');
 
 test('is hashvalue correct', () => {

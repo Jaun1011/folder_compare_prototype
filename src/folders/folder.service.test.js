@@ -1,3 +1,5 @@
+'use strict';
+
 const FolderService = require('./folder.service');
 
 test('is hashvalue correct', () => {

@@ -1,5 +1,6 @@
-let _ = require('lodash');
+'use strict';
 
+const _ = require('lodash');
 const fs = require('fs');
 const fse = require('fs-extra');
 const walkSync = require('walk-sync');

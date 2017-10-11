@@ -1,17 +1,19 @@
-var helper = require('mail/sendgrid').mail;
-var fromEmail = new helper.Email('test@example.com');
-var toEmail = new helper.Email('test@example.com');
-var subject = 'Sending with SendGrid is Fun';
-var content = new helper.Content('text/plain', 'and easy to do anywhere, even with Node.js');
-var mail = new helper.Mail(fromEmail, subject, toEmail, content);
+'use strict';
 
-var CONFIG = require('../res/config');
+let helper = require('mail/sendgrid').mail;
+let fromEmail = new helper.Email('test@example.com');
+let toEmail = new helper.Email('test@example.com');
+let subject = 'Sending with SendGrid is Fun';
+let content = new helper.Content('text/plain', 'and easy to do anywhere, even with Node.js');
+let mail = new helper.Mail(fromEmail, subject, toEmail, content);
+
+let CONFIG = require('../res/config');
 
 
-var sg = require('mail/sendgrid')(CONFIG.SENDGRID.API_KEY);
+let sg = require('mail/sendgrid')(CONFIG.SENDGRID.API_KEY);
 
 
-var request = sg.emptyRequest({
+let request = sg.emptyRequest({
     method: 'POST',
     path: '/v3/mail/send',
     body: {

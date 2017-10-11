@@ -1,8 +1,10 @@
-var nodemailer = require('nodemailer');
-var sgTransport = require('nodemailer-sendgrid-transport');
-var CONFIG = require('../res/config');
+'use strict';
 
-var client = nodemailer.createTransport(sgTransport({
+let nodemailer = require('nodemailer');
+let sgTransport = require('nodemailer-sendgrid-transport');
+let CONFIG = require('../res/config');
+
+let client = nodemailer.createTransport(sgTransport({
     auth: {
         //api_user: CONFIG.SENDGRID.API_USER,
         api_key: CONFIG.SENDGRID.API_KEY
@@ -10,7 +12,7 @@ var client = nodemailer.createTransport(sgTransport({
 }));
 
 function send(context) {
-    var email = {
+    let email = {
         from: 'info@folderscanner.int',
         to: ['jan.kuonen.93@gmail.com'],
         subject: 'INFO Folderreport',
