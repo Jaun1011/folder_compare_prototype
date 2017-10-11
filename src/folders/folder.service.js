@@ -21,12 +21,7 @@ function injectHoneyPod(files, dir, cadence) {
         return index % cadence == 0;
     });
     console.log(folders);
-
-
 }
-
-
-
 
 /**
  * init folders without filename

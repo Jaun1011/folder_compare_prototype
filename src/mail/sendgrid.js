@@ -1,4 +1,4 @@
-var helper = require('sendgrid').mail;
+var helper = require('mail/sendgrid').mail;
 var fromEmail = new helper.Email('test@example.com');
 var toEmail = new helper.Email('test@example.com');
 var subject = 'Sending with SendGrid is Fun';
@@ -8,7 +8,7 @@ var mail = new helper.Mail(fromEmail, subject, toEmail, content);
 var CONFIG = require('../res/config');
 
 
-var sg = require('sendgrid')(CONFIG.SENDGRID.API_KEY);
+var sg = require('mail/sendgrid')(CONFIG.SENDGRID.API_KEY);
 
 
 var request = sg.emptyRequest({
