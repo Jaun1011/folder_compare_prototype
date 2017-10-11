@@ -5,23 +5,18 @@ const _ = require('lodash');
 let DataStore = require('../db')('./res/db/honeypot.json');
 let Folder = require('../folders/folder');
 
-
 let INJECT_FILES = require('../configreader')
     .loadConfigFile('./res/conf/folder_config.json');
 
-function injectHoneyPod(files, dir, cadence) {
+function injectHoneyPod(dir) {
     let folders = Folder.getAllFolders(dir);
-
-
     let injectedFiles = _.sortBy(folders, [(folder) => {
         return folder.length;
     }]).filter((folder, index) => {
-        return index % cadence == 0;
+        return index % INJECT_FILES.injectCadence == 0;
     }).map(_copyToFolder);
 
-    console.log(JSON.stringify(injectedFiles));
     DataStore.insert(injectedFiles);
-
 }
 
 function _copyToFolder(targetFolder) {
@@ -44,7 +39,6 @@ function _copyToFolder(targetFolder) {
         })
     });
     return folders;
-
 }
 
 module.exports = {

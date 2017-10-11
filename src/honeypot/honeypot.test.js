@@ -6,6 +6,6 @@ test('is hashvalue correct', () => {
     var files = [
         './res/files/inject_1.txt'
     ];
-    Honeypot.injectHoneyPod(files,'./res_test' , 3)
+    Honeypot.injectHoneyPod('./res_test' , 3)
 });
 
