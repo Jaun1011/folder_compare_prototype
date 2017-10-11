@@ -34,12 +34,13 @@ function readFileContentInSha256(dir) {
     return sha256(content);
 }
 
-function copy(file ,target) {
-    fse.copySync(path.resolve(__dirname,'./init/xxx.json'), 'xxx.json');
+function copy(filepath ,target) {
+    fse.copySync(filepath , target);
 }
 
 module.exports = {
     readAllFilesWithSubFolders: readAllFilesWithSubFolders,
     readFileContentInSha256: readFileContentInSha256,
-    getAllFolders: getAllFolders
+    getAllFolders: getAllFolders,
+    copy:copy
 };

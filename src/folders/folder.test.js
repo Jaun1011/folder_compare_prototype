@@ -21,7 +21,6 @@ test('readAllFilesWithSubFolders are files correctly listed', () => {
     isEqual(files, result);
 });
 
-
 test('are subfolders correct', () => {
     let folders = Folder.getAllFolders("./res_test/foldering");
     let result = [
@@ -31,6 +30,11 @@ test('are subfolders correct', () => {
         'res_test\\foldering\\sub_2\\u_sub_11'
     ];
     isEqual(folders, result);
+});
+
+test('does it copy', () => {
+    Folder.copy("./res_test/foldering/copyfile.txt","./res_test/foldering/sub_1/copyfile.txt");
+
 });
 
 function isEqual(obj1, obj2) {

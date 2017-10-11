@@ -1,6 +1,6 @@
 'use strict';
 
-const fs = require('fs');
+
 const _ = require('lodash');
 
 let env = require('node-env-file');
@@ -40,15 +40,4 @@ function interval(folders, time) {
     setInterval(function () {
        compare(folders);
     }, time);
-}
-
-
-/**
- * JSON files cant be loaded over the require way.
- * You have to load it over fs..
- * @param path
- */
-function loadConfigFile(path) {
-    var config = fs.readFileSync(path).toString();
-    return JSON.parse(config);
 }

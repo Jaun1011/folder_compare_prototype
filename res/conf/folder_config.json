@@ -1,9 +1,16 @@
 {
   "timeInterval": 60000,
 
-  "injectFiles": [],
+  "injectDirectories": [
+    {
+      "dir": "./res_test/init_files/",
+      "files": [
+        "copyfile.txt"
+      ]
+    }
+  ],
 
   "folders": [
-    "./res_test/foldering"
+
   ]
 }

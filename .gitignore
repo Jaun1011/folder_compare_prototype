@@ -1,3 +1,4 @@
 /node_modules/
 /.idea/
-/res/db/
+lib/
+res/files/

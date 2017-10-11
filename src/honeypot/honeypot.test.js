@@ -1,13 +1,11 @@
 'use strict';
 
-const FolderService = require('./folder.service');
+const Honeypot = require('./honeypot');
 
 test('is hashvalue correct', () => {
     var files = [
         './res/files/inject_1.txt'
     ];
-
-    FolderService.injectHoneyPod(files,'./res_test' , 3)
-
+    Honeypot.injectHoneyPod(files,'./res_test' , 3)
 });
 
