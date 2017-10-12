@@ -1,0 +1,92 @@
+[
+  {
+    date: 1507840978521,
+    source: {
+      path: './res_test/init_files/copyfile.txt',
+      dir: './res_test/init_files/',
+      file: 'copyfile.txt'
+    },
+    target: {
+      path: 'res_test\\foldering\\sub_2\\copyfile.txt',
+      dir: 'res_test\\foldering\\sub_2',
+      file: 'copyfile.txt',
+      hash: 'f0e4c2f76c58916ec258f246851bea091d14d4247a2fc3e18694461b1816e13b'
+    },
+    _id: '3WB0jgyUB6lIYkGo'
+  },
+  {
+    date: 1507840978525,
+    source: {
+      path: './res_test/init_files/copyfile.txt',
+      dir: './res_test/init_files/',
+      file: 'copyfile.txt'
+    },
+    target: {
+      path: 'res_test\\foldering\\sub_2\\u_sub_11\\copyfile.txt',
+      dir: 'res_test\\foldering\\sub_2\\u_sub_11',
+      file: 'copyfile.txt',
+      hash: 'f0e4c2f76c58916ec258f246851bea091d14d4247a2fc3e18694461b1816e13b'
+    },
+    _id: 'UIdpwTwRIODO6Be2'
+  },
+  {
+    date: 1507839977101,
+    source: {
+      path: './res_test/init_files/copyfile.txt',
+      dir: './res_test/init_files/',
+      file: 'copyfile.txt'
+    },
+    target: {
+      path: 'res_test\\foldering\\sub_1\\copyfile.txt',
+      dir: 'res_test\\foldering\\sub_1',
+      file: 'copyfile.txt',
+      hash: '3fd7f9b9b11e374301e35a66aa4bfb8bd114f26e92491ea0effa4b1a9dd40954'
+    },
+    _id: 'ZthoqiyrSxYKf1M1'
+  },
+  {
+    date: 1507839994254,
+    source: {
+      path: './res_test/init_files/copyfile.txt',
+      dir: './res_test/init_files/',
+      file: 'copyfile.txt'
+    },
+    target: {
+      path: 'res_test\\foldering\\sub_2\\u_sub_11\\copyfile.txt',
+      dir: 'res_test\\foldering\\sub_2\\u_sub_11',
+      file: 'copyfile.txt',
+      hash: 'f0e4c2f76c58916ec258f246851bea091d14d4247a2fc3e18694461b1816e13b'
+    },
+    _id: 'iCCFqwnLGxucPSMX'
+  },
+  {
+    date: 1507840978522,
+    source: {
+      path: './res_test/init_files/copyfile.txt',
+      dir: './res_test/init_files/',
+      file: 'copyfile.txt'
+    },
+    target: {
+      path: 'res_test\\foldering\\sub_1\\sub_11\\copyfile.txt',
+      dir: 'res_test\\foldering\\sub_1\\sub_11',
+      file: 'copyfile.txt',
+      hash: 'f0e4c2f76c58916ec258f246851bea091d14d4247a2fc3e18694461b1816e13b'
+    },
+    _id: 'jjfhFcsIEX0kQ9CI'
+  },
+  {
+    date: 1507840978518,
+    source: {
+      path: './res_test/init_files/copyfile.txt',
+      dir: './res_test/init_files/',
+      file: 'copyfile.txt'
+    },
+    target: {
+      path: 'res_test\\foldering\\sub_1\\copyfile.txt',
+      dir: 'res_test\\foldering\\sub_1',
+      file: 'copyfile.txt',
+      hash: '3fd7f9b9b11e374301e35a66aa4bfb8bd114f26e92491ea0effa4b1a9dd40954'
+    },
+    _id: 'oIUQD0GOMXdfqFRL'
+  }
+]

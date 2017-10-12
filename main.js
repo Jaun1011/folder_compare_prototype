@@ -1,43 +1,36 @@
 'use strict';
 
 
-const _ = require('lodash');
+const Honeypot = require('./src/honeypot/honeypot');
+const CONFIG = require('./src/configreader').loadConfigFile('./res/conf/folder_config.json');
 
-let env = require('node-env-file');
+let DataStore = require('nedb');
+let db = new DataStore(
+    {
+        filename:  './res/db/honeypot.db',
+        autoload: true,
+    }
+);
+
+
+
+
 let args = process.argv.slice(2);
 
-
-let FOLDER_CONFIG = loadConfigFile('./res/conf/folder_config.json');
-
-
-let FolderService = require('./src/folders/folder.service');
-
-main(args[0]);
 function main(param) {
     switch(param){
         case '-i' || '--init':
-            _.forEach(FOLDER_CONFIG.folders, function (folder) {
-                FolderService.initFiles(folder);
-            });
+            let res = Honeypot.injectHoneyPod(CONFIG.folders[0])
+            db.insert(res);
             break;
         case '-c' || '--compare':
-            compare(FOLDER_CONFIG.folders);
+            db.find({}, function (err, res) {
+                console.log(Honeypot.compare(res));
+            });
             break;
-
         case '-t' || '--time':
-            interval(FOLDER_CONFIG.folders, FOLDER_CONFIG.timeInterval);
+            Controller.interval();
             break;
     }
 }
-
-function compare(folders) {
-    _.forEach(folders,function(folder){
-        FolderService.compare(folder);
-    });
-}
-
-function interval(folders, time) {
-    setInterval(function () {
-       compare(folders);
-    }, time);
-}
+main(args[0]);

@@ -1,7 +1,7 @@
 {
   "timeInterval": 60000,
 
-  "injectCadence": 5,
+  "injectCadence": 1,
   "injectDirectories": [
     {
       "dir": "./res_test/init_files/",
@@ -12,6 +12,6 @@
   ],
 
   "folders": [
-
+    "./res_test/foldering/"
   ]
 }
