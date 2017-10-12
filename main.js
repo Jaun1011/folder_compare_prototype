@@ -2,6 +2,7 @@
 
 
 const Honeypot = require('./src/honeypot/honeypot');
+
 const CONFIG = require('./src/configreader').loadConfigFile('./res/conf/folder_config.json');
 
 let DataStore = require('nedb');
@@ -22,6 +23,11 @@ function main(param) {
         case '-i' || '--init':
             let res = Honeypot.injectHoneyPod(CONFIG.folders[0])
             db.insert(res);
+            break;
+        case '-r' || '--remove':
+            db.find({}, function (err, res) {
+                Honeypot.cleanUp(res, db)
+            });
             break;
         case '-c' || '--compare':
             db.find({}, function (err, res) {

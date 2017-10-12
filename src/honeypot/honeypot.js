@@ -13,11 +13,17 @@ function injectHoneyPod(dir) {
     }]).filter((folder, index) => {
         return index % INJECT_FILES.injectCadence == 0;
     }).map(_copyToFolder);
-
-    return _cleanUpObject(result);
+    return _convertObject(result);
 }
 
-function _cleanUpObject(result) {
+function cleanUp(dir, db) {
+    _.forEach(dir, (file) =>{
+        Folder.remove(file.target.path);
+        db.remove(file);
+    })
+}
+
+function _convertObject(result) {
     let value= [];
     _.forEach(result, (wtf) => {
         value.push(wtf[0]);
@@ -71,5 +77,6 @@ function compare(files) {
 
 module.exports = {
     injectHoneyPod: injectHoneyPod,
-    compare: compare
+    compare: compare,
+    cleanUp: cleanUp
 };

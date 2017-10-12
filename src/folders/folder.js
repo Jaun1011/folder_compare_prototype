@@ -38,9 +38,17 @@ function copy(filepath ,target) {
     fse.copySync(filepath , target);
 }
 
+function remove(filepath) {
+    fs.exists(filepath, function(exists) {
+        if(exists) {
+            fs.unlink(filepath);
+        }
+    });
+}
 module.exports = {
     readAllFilesWithSubFolders: readAllFilesWithSubFolders,
     readFileContentInSha256: readFileContentInSha256,
     getAllFolders: getAllFolders,
-    copy:copy
+    copy:copy,
+    remove:remove
 };
