@@ -89,7 +89,6 @@ function compare(files) {
 
     let oldFiled = _convertOldFileObjectForDiff(original);
     let newFiles = _convertNewFileObjectForDiff(files);
-
     let result = _compareHash(oldFiled, newFiles);
 
     if (_.isEqual(result, [])) {
