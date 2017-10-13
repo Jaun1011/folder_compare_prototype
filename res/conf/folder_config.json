@@ -1,5 +1,5 @@
 {
-  "timeInterval": 60000,
+  "timeInterval": 10000,
 
   "injectCadence": 1,
   "injectDirectories": [

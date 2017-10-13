@@ -13,15 +13,12 @@ let db = new DataStore(
     }
 );
 
-
-
-
 let args = process.argv.slice(2);
 
 function main(param) {
     switch(param){
         case '-i' || '--init':
-            let res = Honeypot.injectHoneyPod(CONFIG.folders[0])
+            let res = Honeypot.injectHoneyPod(CONFIG.folders[0]);
             db.insert(res);
             break;
         case '-r' || '--remove':
@@ -30,13 +27,19 @@ function main(param) {
             });
             break;
         case '-c' || '--compare':
-            db.find({}, function (err, res) {
-                console.log(Honeypot.compare(res));
-            });
+            compare();
             break;
         case '-t' || '--time':
-            Controller.interval();
+            setInterval(() => {
+                compare();
+            }, CONFIG.timeInterval);
             break;
     }
 }
 main(args[0]);
+
+function compare() {
+    db.find({}, function (err, res) {
+        console.log(Honeypot.compare(res));
+    });
+}
