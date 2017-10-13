@@ -58,21 +58,44 @@ function _copyToFolder(targetFolder) {
     return folders;
 }
 
+function _convertNewFileObjectForDiff(files) {
+    return _.map(files, (file) => {
+        file.hash = Folder.readFileContentInSha256(file.target.path);
+        file.path = file.target.path;
+        return file;
+    });
+}
+
+function _convertOldFileObjectForDiff(files) {
+    return _.map(files, (file) => {
+        file.hash = file.target.hash;
+        file.path = file.target.path;
+        return file;
+    });
+}
+
+function _compareHash(oldvalue, newvalue) {
+    let diff = [];
+    for (let i = 0; i < oldvalue.length; i++) {
+        if (oldvalue[i].hash !== newvalue[i].hash) {
+            diff.push(newvalue[i]);
+        }
+    }
+    return diff;
+}
+
 function compare(files) {
     let original = _.cloneDeep(files);
 
-    _.forEach(files, (file) => {
-        file.target.hash = Folder.readFileContentInSha256(file.target.path);
-    });
+    let oldFiled = _convertOldFileObjectForDiff(original);
+    let newFiles = _convertNewFileObjectForDiff(files);
 
-    let result = {
-        newDir: _.differenceBy(original, files, 'target.path'),
-        existingDir: _.differenceBy(original, files, 'target.hash')
-    };
-    if (!_.isEqual(result.newDir, []) || !_.isEqual(result.existingDir, [])) {
-        return result
+    let result = _compareHash(oldFiled, newFiles);
+
+    if (_.isEqual(result, [])) {
+        return false;
     }
-    return false;
+    return result
 }
 
 module.exports = {
