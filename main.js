@@ -45,7 +45,6 @@ function compare() {
         if (!_.isEqual(report , false)) {
             runBat(report);
         }
-
         console.log(report);
     });
 }

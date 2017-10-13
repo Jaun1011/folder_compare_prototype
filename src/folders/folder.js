@@ -6,6 +6,7 @@ const fse = require('fs-extra');
 const walkSync = require('walk-sync');
 const Filehound = require('filehound');
 const sha256 = require('sha256');
+const UUID = require('uuid/v4');
 
 
 /**
@@ -28,9 +29,15 @@ function getAllFolders(path) {
 }
 
 function readFileContentInSha256(dir) {
-    let content = fs
-        .readFileSync(dir)
-        .toString();
+    let content;
+    try {
+        content = fs
+            .readFileSync(dir)
+            .toString();
+    }catch (ex){
+        content = UUID()
+    }
+
     return sha256(content);
 }
 
