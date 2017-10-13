@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "run": "node main.js -i",
-    "buid": "pkg main.js ",
+    "build": "pkg main.js ",
     "test": "jest"
   },
   "author": "",
