@@ -1,6 +1,6 @@
 {
   "timeInterval": 10000,
-
+  "executeScript" : "cmd /c start cmd /c script.bat",
   "injectCadence": 1,
   "injectDirectories": [
     {
@@ -10,7 +10,6 @@
       ]
     }
   ],
-
   "folders": [
     "./res_test/foldering/"
   ]

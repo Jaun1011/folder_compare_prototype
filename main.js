@@ -1,5 +1,6 @@
 'use strict';
 
+const _ = require('lodash');
 
 const Honeypot = require('./src/honeypot/honeypot');
 
@@ -39,7 +40,18 @@ function main(param) {
 main(args[0]);
 
 function compare() {
-    db.find({}, function (err, res) {
-        console.log(Honeypot.compare(res));
+    db.find({}, function (err, files) {
+        let report = Honeypot.compare(files);
+        if (!_.isEqual(report , false)) {
+            runBat(report);
+        }
+
+        console.log(report);
+    });
+}
+
+function runBat(data) {
+    require('child_process').exec(CONFIG.executeScript + " /u" + JSON.stringify(data), (err) =>{
+        console.log(err);
     });
 }

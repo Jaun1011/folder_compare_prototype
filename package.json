@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^1.0.2",
+    "child_process": "^1.0.2",
     "filehound": "^1.16.2",
     "fs": "0.0.1-security",
     "fs-extra": "^4.0.2",
