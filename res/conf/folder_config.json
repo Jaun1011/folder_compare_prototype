@@ -6,11 +6,13 @@
     {
       "dir": "./res_test/init_files/",
       "files": [
-        "copyfile.txt"
+        "copyfile.txt",
+        "2.txt"
       ]
     }
   ],
   "folders": [
-    "./node_modules/"
+    "D:/dev/workspace/folder_compare_prototype/res_test/foldering/sub_1/",
+    "D:/dev/workspace/folder_compare_prototype/res_test/foldering/sub_2/"
   ]
 }

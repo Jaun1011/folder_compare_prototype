@@ -5,8 +5,6 @@ const _ = require('lodash');
 let DataStore = require('../db')('./res/db/initial.json');
 let Folder = require('./folder');
 
-
-
 function _enrichFileObject(list) {
     return _.forEach(list, function (file) {
         file.hash = Folder.readFileContentInSha256(file.dir);

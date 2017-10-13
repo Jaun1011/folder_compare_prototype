@@ -6,34 +6,31 @@ let Folder = require('../folders/folder');
 const INJECT_FILES = require('../configreader').loadConfigFile('./res/conf/folder_config.json');
 
 function injectHoneyPod(dir) {
+
     let folders = Folder.getAllFolders(dir);
 
-    let result = _.sortBy(folders, [(folder) => {
+    let res = _.sortBy(folders, [(folder) => {
         return folder.length;
     }]).filter((folder, index) => {
         return index % INJECT_FILES.injectCadence == 0;
-    }).map(_copyToFolder);
-    return _convertObject(result);
+    });
+
+    let sortedFolders = [];
+    _.forEach(res ,(dir) => {
+        sortedFolders.push(_copyToFolder(dir));
+    });
+    return sortedFolders[0];
 }
 
 function cleanUp(dir, db) {
-    _.forEach(dir, (file) =>{
+    _.forEach(dir, (file) => {
         Folder.remove(file.target.path);
         db.remove(file);
     })
 }
 
-function _convertObject(result) {
-    let value= [];
-    _.forEach(result, (wtf) => {
-        value.push(wtf[0]);
-    });
-    return value;
-}
-
 function _copyToFolder(targetFolder) {
     let folders = [];
-    let i = 0;
 
     _.forEach(INJECT_FILES.injectDirectories, (injectdir) => {
         _.forEach(injectdir.files, (file) => {
