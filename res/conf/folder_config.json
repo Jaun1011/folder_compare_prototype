@@ -1,7 +1,8 @@
 {
   "timeInterval": 10000,
+  "logLevel": "info",
   "executeScript" : "cmd /c start cmd /c script.bat",
-  "injectCadence": 50,
+  "injectCadence": 1,
   "injectDirectories": [
     {
       "dir": "./res_test/init_files/",

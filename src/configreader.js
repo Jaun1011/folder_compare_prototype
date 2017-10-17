@@ -1,6 +1,7 @@
 'use strict';
 
 const fs = require('fs');
+
 /**
  * JSON files cant be loaded over the require way.
  * You have to load it over fs..

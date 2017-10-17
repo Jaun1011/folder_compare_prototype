@@ -3,22 +3,30 @@
 const _ = require('lodash');
 
 let Folder = require('../folders/folder');
-const INJECT_FILES = require('../configreader').loadConfigFile('./res/conf/folder_config.json');
+const CONFIG = require('../configreader').loadConfigFile('./res/conf/folder_config.json');
+
+
+let log4js = require('log4js');
+let logger = log4js.getLogger();
+logger.level = CONFIG.logLevel;
 
 function injectHoneyPod(dir) {
-
+    logger.info("honeypot file inject: started with dir ->", dir);
     let folders = Folder.getAllFolders(dir);
 
     let res = _.sortBy(folders, [(folder) => {
         return folder.length;
     }]).filter((folder, index) => {
-        return (index + 1) % INJECT_FILES.injectCadence == 0;
+        return (index + 1) % CONFIG.injectCadence == 0;
     });
 
     let sortedFolders = [];
     _.forEach(res ,(dir) => {
         sortedFolders.push(_copyToFolder(dir));
     });
+    logger.debug("honeypot: inject files ->", sortedFolders);
+
+    logger.info("honeypot file inject: finished");
     return mergeFolderArray(sortedFolders);
 }
 
@@ -26,6 +34,7 @@ function mergeFolderArray(folderArray) {
     let result = [];
     _.forEach(folderArray , (folder) => {
        _.forEach(folder, (item) => {
+           logger.debug("honeypot: folder add to honeypot -> " , item);
            result.push(item);
        });
     });
@@ -33,16 +42,21 @@ function mergeFolderArray(folderArray) {
 }
 
 function cleanUp(dir, db) {
+    logger.info("clean up :started");
     _.forEach(dir, (file) => {
         Folder.remove(file.target.path);
+        logger.debug("honeypot: file removed -> " , file);
+
         db.remove(file);
     });
+    logger.info("clean up: finished");
 }
 
 function _copyToFolder(targetFolder) {
     let folders = [];
+    logger.debug("honeypot: copy file start on folder -> " , targetFolder);
 
-    _.forEach(INJECT_FILES.injectDirectories, (injectdir) => {
+    _.forEach(CONFIG.injectDirectories, (injectdir) => {
         _.forEach(injectdir.files, (file) => {
             let targetPath = targetFolder + "\\" + file;
             Folder.copy(injectdir.dir + file, targetPath);
@@ -62,6 +76,7 @@ function _copyToFolder(targetFolder) {
             });
         });
     });
+    logger.debug("honeypot: copy file finished with result ->" , folders);
     return folders;
 }
 
@@ -84,6 +99,8 @@ function _convertOldFileObjectForDiff(files) {
 function _compareHash(oldvalue, newvalue) {
     let diff = [];
     for (let i = 0; i < oldvalue.length; i++) {
+        logger.debug("honeypot: compare hash -> oldvalue => " , oldvalue[i], "newvalue => ",newvalue[i]);
+        logger.debug("honeypot: operation -> " , oldvalue[i].hash !== newvalue[i].hash);
         if (oldvalue[i].hash !== newvalue[i].hash) {
             diff.push(newvalue[i]);
         }
@@ -92,11 +109,15 @@ function _compareHash(oldvalue, newvalue) {
 }
 
 function compare(files) {
+    logger.info("compare: started");
+
     let original = _.cloneDeep(files);
 
     let oldFiled = _convertOldFileObjectForDiff(original);
     let newFiles = _convertNewFileObjectForDiff(files);
     let result = _compareHash(oldFiled, newFiles);
+
+    logger.info("compare: finished -> ", JSON.stringify(result));
 
     if (_.isEqual(result, [])) {
         return false;
