@@ -12,21 +12,31 @@ function injectHoneyPod(dir) {
     let res = _.sortBy(folders, [(folder) => {
         return folder.length;
     }]).filter((folder, index) => {
-        return index % INJECT_FILES.injectCadence == 0;
+        return (index + 1) % INJECT_FILES.injectCadence == 0;
     });
 
     let sortedFolders = [];
     _.forEach(res ,(dir) => {
         sortedFolders.push(_copyToFolder(dir));
     });
-    return sortedFolders[0];
+    return mergeFolderArray(sortedFolders);
+}
+
+function mergeFolderArray(folderArray) {
+    let result = [];
+    _.forEach(folderArray , (folder) => {
+       _.forEach(folder, (item) => {
+           result.push(item);
+       });
+    });
+    return result;
 }
 
 function cleanUp(dir, db) {
     _.forEach(dir, (file) => {
         Folder.remove(file.target.path);
         db.remove(file);
-    })
+    });
 }
 
 function _copyToFolder(targetFolder) {
