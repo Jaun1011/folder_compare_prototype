@@ -3,7 +3,7 @@ This tool scans trough your folder and compares it with an initialized state.
 
 
 ## Compiling
-For make a compile execute following commands
+To make a compile execute following commands
 ``` bash
 $ npm install
 $ npm run build
