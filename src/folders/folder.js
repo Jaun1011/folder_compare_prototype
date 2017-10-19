@@ -21,11 +21,21 @@ function readAllFilesWithSubFolders(dir) {
         .findSync();
 }
 
-function getAllFolders(path) {
+function getAllFolders(path, excludedFolders) {
     return Filehound.create()
         .path(path)
         .directory()
         .findSync();
+}
+
+function removeFolders(target, folders) {
+    return _.remove(target,(item) => {
+        for (let i = 0 ;i < folders.length; i++){
+            if (item.match(folders[i]))
+                return true
+        }
+        return false;
+    })
 }
 
 function readFileContentInSha256(dir) {

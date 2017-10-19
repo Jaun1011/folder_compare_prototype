@@ -10,9 +10,14 @@ let log4js = require('log4js');
 let logger = log4js.getLogger();
 logger.level = CONFIG.logLevel;
 
+const excludedFolders = CONFIG.excludedFolders;
+
+
 function injectHoneyPod(dir) {
     logger.info("honeypot file inject: started with dir ->", dir);
-    let folders = Folder.getAllFolders(dir);
+    let folders  = Folder.getAllFolders(dir, excludedFolders);
+    // folders.push(dir);
+
 
     let res = _.sortBy(folders, [(folder) => {
         return folder.length;
@@ -25,7 +30,6 @@ function injectHoneyPod(dir) {
         sortedFolders.push(_copyToFolder(dir));
     });
     logger.debug("honeypot: inject files ->", sortedFolders);
-
     logger.info("honeypot file inject: finished");
     return mergeFolderArray(sortedFolders);
 }
