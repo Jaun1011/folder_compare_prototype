@@ -62,7 +62,7 @@ function _copyToFolder(targetFolder) {
 
     _.forEach(CONFIG.injectDirectories, (injectdir) => {
         _.forEach(injectdir.files, (file) => {
-            let targetPath = targetFolder + "\\" + file;
+            let targetPath = targetFolder  + file;
             Folder.copy(injectdir.dir + file, targetPath);
             folders.push({
                 date: Date.now(),

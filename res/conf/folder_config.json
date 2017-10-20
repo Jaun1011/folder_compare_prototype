@@ -7,15 +7,13 @@
     {
       "dir": "./res_test/init_files/",
       "files": [
-        "copyfile.txt"
+        "copyfile.txt",
+        "2.txt"
       ]
     }
   ],
   "folders": [
-    "D:/dev/workspace/folder_compare_prototype/res_test/foldering/"
-  ],
-  "excludedFolders": [
-    "D:/dev/workspace/folder_compare_prototype/res_test/foldering/sub_1/"
+    "./node_modules/"
   ]
 
 }
