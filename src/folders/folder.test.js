@@ -10,30 +10,31 @@ test('is hashvalue correct', () => {
 
 test('readAllFilesWithSubFolders are files correctly listed', () => {
     let files = Folder.readAllFilesWithSubFolders("./res_test/foldering");
-    let result = [
-        'res_test\\foldering\\sub_1\\sub_11\\testfile_111',
-        'res_test\\foldering\\sub_1\\testfile_11',
-        'res_test\\foldering\\sub_2\\u_sub_11\\blub',
-        'res_test\\foldering\\testfile_1',
-        'res_test\\foldering\\testfile_2'
+    let result =[
+        "res_test/foldering/sub_1/",
+        "res_test/foldering/sub_1/sub_11/",
+        "res_test/foldering/sub_2/",
+        "res_test/foldering/sub_2/u_sub_11/"
     ];
 
+    console.log(files);
     isEqual(files, result);
 });
 
 test('are subfolders correct', () => {
-    let folders = Folder.getAllFolders("./res_test/foldering");
+    let folders = Folder.getAllFolders("./res_test/foldering/", ["res_test/foldering/sub_2/u_sub_11/"]);
     let result = [
-        'res_test\\foldering\\sub_1',
-        'res_test\\foldering\\sub_1\\sub_11',
-        'res_test\\foldering\\sub_2',
-        'res_test\\foldering\\sub_2\\u_sub_11'
+        "res_test/foldering/sub_1/",
+        "res_test/foldering/sub_1/sub_11/",
+        "res_test/foldering/sub_2/",
+        "res_test/foldering/sub_2/u_sub_11/",
+        "res_test/foldering/"
     ];
     isEqual(folders, result);
 });
 
 test('does it copy', () => {
-    Folder.copy("./res_test/foldering/copyfile.txt","./res_test/foldering/sub_1/copyfile.txt");
+    Folder.copy("./res_test/foldering/copyfile.txt", "./res_test/foldering/sub_1/copyfile.txt");
 
 });
 

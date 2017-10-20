@@ -22,10 +22,21 @@ function readAllFilesWithSubFolders(dir) {
 }
 
 function getAllFolders(path, excludedFolders) {
-    return Filehound.create()
+    let folders = Filehound.create()
         .path(path)
         .directory()
         .findSync();
+    folders.push(path);
+    return _.map(folders, (folder) => {
+        return folder.replace(/\\/g, '/') + '/';
+    }).remove((item) => {
+        for (let i = 0 ;i < excludedFolders.length; i++){
+            // todo regex pattern match
+            if (item.match(/folders[i]/g))
+                return true;
+        }
+        return false;
+    });
 }
 
 function removeFolders(target, folders) {

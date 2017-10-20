@@ -17,7 +17,7 @@ You can delete the `node_modules` folder if the app is to big.
 | `-i, --init`   | initialises all folders, needful if you change the config     |
 | `-c, --compare`| executes the compare workflow once                            |
 | `-r, --remove` | removes all files from honeypot db and folder                 |
-| `-t, --time`   | executes the compare all `{N}` sec                              |
+| `-t, --time`   | executes the compare all `{N}` sec                            |
 
 ## Config File
 
