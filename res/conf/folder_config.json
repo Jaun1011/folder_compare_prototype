@@ -13,11 +13,10 @@
     }
   ],
   "folders": [
-    "./node_modules/"
+    "node_modules/"
   ],
   "excludedFolders": [
-    "res_test/foldering/sub_1/sub_11/",
-    "res_test/foldering/sub_2/sub_11/"
+    "node_modules/async/"
   ]
 
 }

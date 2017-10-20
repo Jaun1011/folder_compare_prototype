@@ -27,19 +27,13 @@ function getAllFolders(path, excludedFolders) {
         .path(path)
         .directory()
         .findSync()
-        .map(folder =>  folder.replace(/\\/g, '/') + '/')
+        .map(folder => folder.replace(/\\/g, '/') + '/')
         .push(path);
-    /*
-    return _.map(folders, (folder) => {
-        return folder.replace(/\\/g, '/') + '/';
-    });*/
 }
 
 
-
-
 function flatten(lists) {
-    return lists.reduce(function(a, b) {
+    return lists.reduce(function (a, b) {
         return a.concat(b);
     }, []);
 }
@@ -53,18 +47,23 @@ function getDirectories(srcpath) {
     return excludePaths(paths, CONFIG.excludedFolders);
 }
 
-function excludePaths(paths , excludedFolders) {
-    return _.filter(paths, (path) => {
-        let result = true;
+function excludePaths(paths, excludedFolders) {
+    if (excludedFolders.length > 0) {
+        return _.filter(paths, (path) => {
+            let result = true;
+            for (let i = 0; i < excludedFolders.length; i++) {
+                let excludedFolder = excludedFolders[i];
+                let re = new RegExp(excludedFolder + ".*", "g");
+                result = path.match(re) || _.isEqual(excludedFolder, path);
 
-        _.forEach(excludedFolders, (exFolder) => {
-            console.log("@@@@@@@@@@@@@");
-            console.log(exFolder);
-            let re = new RegExp(exFolder + ".*", "g");
-            result = !path.match(re);
+                if (result) {
+                    break;
+                }
+            }
+            return !result;
         });
-        return result;
-    });
+    }
+    return paths;
 }
 
 
@@ -73,8 +72,8 @@ function readAllFoldersFs(srcpath) {
 }
 
 function removeFolders(target, folders) {
-    return _.remove(target,(item) => {
-        for (let i = 0 ;i < folders.length; i++){
+    return _.remove(target, (item) => {
+        for (let i = 0; i < folders.length; i++) {
             if (item.match(folders[i]))
                 return true;
         }
@@ -88,29 +87,30 @@ function readFileContentInSha256(dir) {
         content = fs
             .readFileSync(dir)
             .toString();
-    }catch (ex){
+    } catch (ex) {
         content = UUID();
     }
     return sha256(content);
 }
 
-function copy(filepath ,target) {
-    fse.copySync(filepath , target);
+function copy(filepath, target) {
+    fse.copySync(filepath, target);
 }
 
 function remove(filepath) {
-    fs.exists(filepath, function(exists) {
-        if(exists) {
+    fs.exists(filepath, function (exists) {
+        if (exists) {
             fs.unlink(filepath);
         }
     });
 }
+
 module.exports = {
     readAllFilesWithSubFolders: readAllFilesWithSubFolders,
     readFileContentInSha256: readFileContentInSha256,
     getAllFolders: getAllFolders,
-    copy:copy,
-    remove:remove,
+    copy: copy,
+    remove: remove,
     readAllFoldersFs: readAllFoldersFs,
     excludePaths: excludePaths
 };
