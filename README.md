@@ -38,6 +38,9 @@ The config file can be found under `./res/conf/folder_config.json`
 
   "folders": [
     "./res_test/foldering/"
+  ],
+  "excludedFolders": [
+    "node_modules/async/"
   ]
 }
 ```
@@ -49,3 +52,4 @@ The config file can be found under `./res/conf/folder_config.json`
 | `injectCadence`     | every `{N}` th folder will be used for the honeypot                   |
 | `injectDirectories` | the folders which should be used for injecting                     |
 | `folders`           | folders which will be compared. The values must end with `.../`    |
+| `excludedFolders`   | list of folders which are not injected      |
