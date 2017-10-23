@@ -7,16 +7,17 @@
     {
       "dir": "./res_test/init_files/",
       "files": [
-        "copyfile.txt",
-        "2.txt"
+        "copyfile.txt"
       ]
     }
   ],
   "folders": [
-    "node_modules/"
+    "res_test/foldering/"
   ],
   "excludedFolders": [
-    "node_modules/async/"
+    "res_test/foldering/sub_1/",
+    ".*dfs.*",
+    ".*DFS.*"
   ]
 
 }

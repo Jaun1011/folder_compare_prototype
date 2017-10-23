@@ -10,28 +10,6 @@ const path = require('path');
 const CONFIG = require('../configreader').loadConfigFile('./res/conf/folder_config.json');
 
 
-/**
- * get back all files in folder and subfolder
- * @param dir
- * @param filelist
- * @returns {*|Array}
- */
-function readAllFilesWithSubFolders(dir) {
-    return Filehound.create()
-        .path(dir)
-        .findSync();
-}
-
-function getAllFolders(path, excludedFolders) {
-    return Filehound.create()
-        .path(path)
-        .directory()
-        .findSync()
-        .map(folder => folder.replace(/\\/g, '/') + '/')
-        .push(path);
-}
-
-
 function flatten(lists) {
     return lists.reduce(function (a, b) {
         return a.concat(b);
@@ -106,9 +84,7 @@ function remove(filepath) {
 }
 
 module.exports = {
-    readAllFilesWithSubFolders: readAllFilesWithSubFolders,
     readFileContentInSha256: readFileContentInSha256,
-    getAllFolders: getAllFolders,
     copy: copy,
     remove: remove,
     readAllFoldersFs: readAllFoldersFs,
