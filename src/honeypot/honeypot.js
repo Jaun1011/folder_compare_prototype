@@ -5,16 +5,14 @@ const _ = require('lodash');
 let Folder = require('../folders/folder');
 const CONFIG = require('../configreader').loadConfigFile('./res/conf/folder_config.json');
 
-
 let log4js = require('log4js');
 let logger = log4js.getLogger();
 logger.level = CONFIG.logLevel;
 
-
 function injectHoneyPod(dir) {
     logger.info("honeypot file inject: started with dir ->", dir);
-    let folders  = Folder.readAllFoldersFs(dir);
 
+    let folders  = Folder.readAllFoldersFs(dir);
     let res = _.sortBy(folders, [(folder) => {
         return folder.length;
     }]).filter((folder, index) => {
@@ -25,6 +23,7 @@ function injectHoneyPod(dir) {
     _.forEach(res ,(dir) => {
         sortedFolders.push(_copyToFolder(dir));
     });
+
     logger.debug("honeypot: inject files ->", sortedFolders);
     logger.info("honeypot file inject: finished");
     return mergeFolderArray(sortedFolders);
@@ -42,7 +41,7 @@ function mergeFolderArray(folderArray) {
 }
 
 function cleanUp(dir, db) {
-    logger.info("clean up :started");
+    logger.info("clean up: started");
     _.forEach(dir, (file) => {
         Folder.remove(file.target.path);
         logger.debug("honeypot: file removed -> " , file);

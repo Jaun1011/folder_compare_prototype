@@ -19,18 +19,16 @@ let args = process.argv.slice(2);
 function main(param) {
     switch(param){
         case '-i' || '--init':
-            _.forEach(CONFIG.folders, (folder) => {
-                let res = Honeypot.injectHoneyPod(folder);
-                db.insert(res);
-            });
+            inject();
             break;
-        case '-r' || '--remove':
-            db.find({}, function (err, res) {
-                Honeypot.cleanUp(res, db)
-            });
+        case '-d' || '--delete':
+            deleteInjects();
             break;
         case '-c' || '--compare':
             compare();
+            break;
+        case '-r' || '--reinject':
+            reinject();
             break;
         case '-t' || '--time':
             setInterval(() => {
@@ -40,6 +38,25 @@ function main(param) {
     }
 }
 main(args[0]);
+
+function inject() {
+    _.forEach(CONFIG.folders, (folder) => {
+        let res = Honeypot.injectHoneyPod(folder);
+        db.insert(res);
+    });
+}
+
+function deleteInjects(clojure) {
+    db.find({}, function (err, res) {
+        Honeypot.cleanUp(res, db);
+        if(_.isFunction(clojure))
+            clojure();
+    });
+}
+
+function reinject() {
+    deleteInjects(inject);
+}
 
 function compare() {
     db.find({}, function (err, files) {
