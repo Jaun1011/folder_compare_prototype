@@ -41,7 +41,8 @@ The config file can be found under `./res/conf/folder_config.json`
     "./res_test/foldering/"
   ],
   "excludedFolders": [
-    "node_modules/async/"
+    "node_modules/async/",
+    ".*also regex[1] is possible().*"
   ]
 }
 ```
